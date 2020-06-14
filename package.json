@@ -1,6 +1,6 @@
 {
-  "name": "test-app",
-  "version": "0.0.0",
+  "name": "simchope",
+  "version": "1.0.0-alpha",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
