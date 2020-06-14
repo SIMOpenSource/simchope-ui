@@ -1,0 +1,86 @@
+<div class="container-fluid">
+  <div *ngIf="studyArea" class="card" style="max-height: 100%;">
+    <div class="card-body rounded shadow" style="max-height: 100%;">
+      <h4 class="card-title">{{ studyArea.areaName }}<br></h4>
+
+      <hr>
+      <div style="margin-bottom: 50px;">
+        <div *ngFor="let score of studyArea.scores" class="progress mb-4">
+          <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+               [attr.aria-valuenow]="score + 1"
+               [attr.aria-valuemin]="0"
+               [attr.aria_valuemax]="5"
+               [style.width]="(score + 1)/5 * 100 + '%'"
+          ></div>
+        </div>
+        <p class="text-monospace float-left text-muted" style="/*float: right;*/font-size: 14px;">
+          Last Updated: {{ studyArea.lastUpdated }}</p>
+      </div>
+
+      <hr>
+      <section>
+        <h6 class="mb-2">Description</h6>
+        <p class="text-muted" style="margin-bottom: 20px; white-space: pre-line"
+        >{{ processDescriptionText(studyArea.description) }}</p>
+      </section>
+
+      <hr>
+      <section>
+        <h6 class="mb-2">Facilities</h6>
+        <ul *ngFor="let facility of studyArea.facilities" class="text-muted">
+          <li>{{ facility }}</li>
+        </ul>
+      </section>
+
+      <hr>
+      <div>
+        <h6 class="mb-2">Contribute</h6>
+        <div>
+          <div class="row" style="padding-bottom: 20px;padding-left: 20px;padding-right: 20px;">
+            <h6 class="text-center text-muted mb-2 col-12"
+                style="margin-top: 10px;margin-left: 10px;padding-bottom: 10px;">How does it
+              look like?</h6>
+
+            <div class="text-center col-6">
+              <button class="btn btn-success btn-sm shadow-sm"
+                      type="button"
+                      style="margin-right: 5px;margin-bottom: 5px;"
+                      (click)="submitScoreUpdate(0)"
+              >
+                Almost all spaces available ...........&nbsp;
+              </button>
+            </div>
+
+            <div class="text-center col-6">
+              <button class="btn btn-warning btn-sm shadow-sm" type="button"
+                      style="margin-right: 5px;margin-bottom: 5px;"
+                      (click)="submitScoreUpdate(1)"
+              >
+                Fewer than half spaces available
+              </button>
+            </div>
+
+            <div class="text-center col-6">
+              <button class="btn btn-secondary btn-sm shadow-sm" type="button"
+                      style="margin-right: 5px;margin-bottom: 5px;"
+                      (click)="submitScoreUpdate(2)"
+              >
+                Half or more spaces available
+              </button>
+            </div>
+
+            <div class="text-center col-6">
+              <button class="btn btn-danger btn-sm" type="button"
+                      style="margin-right: 5px;margin-bottom: 5px;"
+                      (click)="submitScoreUpdate(3)"
+              >
+                No spaces left at all :'(
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

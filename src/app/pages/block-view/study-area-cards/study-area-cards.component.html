@@ -1,0 +1,19 @@
+<div *ngFor="let sa of filteredAreas" class="card border rounded shadow"  style="margin-bottom: 10px;">
+  <div class="card-body border rounded-0 shadow">
+    <h4 class="card-title">{{ sa.areaName }}</h4>
+    <div class="progress mb-2">
+      <div class="progress-bar progress-bar-striped progress-bar-animated"
+           [attr.aria-valuenow]="calculateOccupancyBar(sa.scores)"
+           [attr.aria-valuemin]="0"
+           [attr.aria_valuemax]="5"
+           [style.width]="calculateOccupancyBar(sa.scores)/5 * 100 + '%'"
+      ></div>
+    </div>
+    <p class="card-text text-muted">{{ sa.description }}</p>
+    <div class="row">
+      <p class="col-6 card-link">Capacity - {{ sa.capacity }}</p>
+      <p class="col-6 text-muted ml-auto" style="float: right;">{{ sa.lastUpdated }}</p>
+    </div>
+    <a class="stretched-link" (click)="onCardClick(sa)"></a>
+  </div>
+</div>
