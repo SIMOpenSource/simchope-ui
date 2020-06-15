@@ -1,4 +1,4 @@
-# SIMChope
+# SIMChope [![Netlify Status](https://api.netlify.com/api/v1/badges/e23c0594-79e2-4573-ba59-70ee83781b4b/deploy-status)](https://app.netlify.com/sites/simchope/deploys)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.19.
 
