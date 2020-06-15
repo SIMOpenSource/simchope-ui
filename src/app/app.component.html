@@ -1,0 +1,44 @@
+<nz-layout class="app-layout">
+
+  <nz-sider nzCollapsible nzTheme="light" nzBreakpoint="lg" [nzCollapsedWidth]="0">
+    <div class="logo" [style.height]="'100px'">
+      <img src="assets/logo.png" alt="Logo">
+    </div>
+    <ul nz-menu nzMode="inline">
+      <li nz-menu-item routerLink="/welcome">
+        <i nz-icon nzType="home"></i>
+        <span>Home</span>
+      </li>
+
+      <li nz-submenu nzTitle="Block View">
+        <ul>
+          <li nz-menu-item [routerLink]="['/welcome/block', 'A']">
+            <i class="fa fa-building-o"></i>
+            <span> Block A</span>
+          </li>
+          <li nz-menu-item [routerLink]="['/welcome/block', 'B']">
+            <i class="fa fa-building-o"></i>
+            <span> Block B</span>
+          </li>
+          <li nz-menu-item [routerLink]="['welcome/block', 'C']">
+            <i class="fa fa-building-o"></i>
+            <span> Block C</span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+
+    <nz-content>
+      <div class="inner-content" style="overflow-x: scroll">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+
+    <nz-footer>
+      Copyright @ SIM Chope
+    </nz-footer>
+  </nz-layout>
+
+</nz-layout>

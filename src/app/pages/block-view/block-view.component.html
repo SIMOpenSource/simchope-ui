@@ -1,0 +1,36 @@
+<div *ngIf="!showError" class="container">
+  <div *ngIf="studyAreas" class="intro" style="margin: 0px 0px;">
+    <h1
+      style="font-weight: bold;margin-bottom: 40px;padding-top: 40px;color: inherit;margin-bottom: 25px;">
+      Blk {{ block }}</h1>
+  </div>
+  <div class="row justify-content-center features">
+
+    <div *ngIf="studyAreas" class="col text-center col-1">
+      <h5 style="margin-bottom: 35px;">Level</h5>
+      <div class="btn-group-vertical justify-content-center" role="group">
+        <button *ngFor="let level of numbers; index as i"
+                class="btn btn-primary border rounded" type="button"
+                style="margin-bottom: 30px;" (click)="changeLevels(i+1)"
+        >{{ i + 1 }}</button>
+      </div>
+    </div>
+
+    <div class="col d-inline-block col-5" style="max-height: 900px; overflow-y: scroll">
+      <app-study-area-cards
+        (studyAreaSelected)="onStudyAreaSelected($event)"
+      ></app-study-area-cards>
+    </div>
+
+    <div class="col col-6">
+      <app-study-area-detail
+        [studyArea]="selectedStudyArea"
+      ></app-study-area-detail>
+    </div>
+
+  </div>
+</div>
+
+<ng-template [ngIf]="showError">
+  <app-server-error></app-server-error>
+</ng-template>
