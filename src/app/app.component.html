@@ -1,37 +1,30 @@
 <nz-layout class="app-layout">
 
   <nz-sider nzCollapsible nzTheme="light" nzBreakpoint="lg" [nzCollapsedWidth]="0">
-    <div class="logo" [style.height]="'100px'"></div>
+    <div class="logo" [style.height]="'100px'">
+      <img src="assets/logo.png" alt="Logo">
+    </div>
     <ul nz-menu nzMode="inline">
-
       <li nz-menu-item routerLink="/welcome">
-        <i nz-icon nzType="user"></i>
+        <i nz-icon nzType="home"></i>
         <span>Home</span>
       </li>
 
       <li nz-submenu nzTitle="Block View">
         <ul>
           <li nz-menu-item [routerLink]="['/welcome/block', 'A']">
-            <i nz-icon nzType="video-camera"></i>
-            <span>Block A</span>
+            <i class="fa fa-building-o"></i>
+            <span> Block A</span>
           </li>
           <li nz-menu-item [routerLink]="['/welcome/block', 'B']">
-            <i nz-icon nzType="video-camera"></i>
-            <span>Block B</span>
+            <i class="fa fa-building-o"></i>
+            <span> Block B</span>
           </li>
           <li nz-menu-item [routerLink]="['welcome/block', 'C']">
-            <i nz-icon nzType="video-camera"></i>
-            <span>Block C</span>
+            <i class="fa fa-building-o"></i>
+            <span> Block C</span>
           </li>
         </ul>
-      </li>
-      <li nz-menu-item>
-        <i nz-icon nzType="upload"></i>
-        <span>nav 3</span>
-      </li>
-      <li nz-menu-item>
-        <i nz-icon nzType="user"></i>
-        <span>nav 4</span>
       </li>
     </ul>
   </nz-sider>

@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {StudyArea} from '../study-area-cards/study-area-cards.component';
-import {StudyAreasService} from '../services/study-areas.service';``
+import {StudyArea} from '../../models/study-area.model';
+import {StudyAreasService} from '../../services/study-areas.service';
 import {NzModalService, NzNotificationService} from 'ng-zorro-antd';
+import {ScoreUpdate} from '../../models/score-update.model';
 
 @Component({
   selector: 'app-study-area-detail',
@@ -18,15 +19,17 @@ export class StudyAreaDetailComponent implements OnInit {
     private notificationService: NzNotificationService
   ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   processDescriptionText = (input: string) => {
-    return input.split('/').join('\n\n');
+    const strArray = input.split('/');
+    const descriptionText = strArray[0];
+    strArray.shift();
+    return descriptionText.concat('\n\n').concat(strArray.join('\n'));
   }
 
   submitScoreUpdate(score) {
-    const scoreUpdate = new ScoreUpdate('ko002', this.studyArea.id, score);
+    const scoreUpdate = new ScoreUpdate('thin007', this.studyArea.id, score);
     this.studyAreasService.submitScoreUpdate(scoreUpdate).subscribe(
       next => {
         console.log(next);
@@ -43,47 +46,42 @@ export class StudyAreaDetailComponent implements OnInit {
   }
 
   constructModalContent(score) {
-    const [className, text] = this.deriveColourAndText(score);
+    const scoreData = ScoreUpdate.deriveClassNameAndText(score);
     return `<div class="pt-2">
               <h6>Right now, there are</h6>
-              <div class="${className}">${text}</div>
+              <div class="${scoreData.className} popup-modal">${scoreData.text}</div>
               <h6>Thank you for your contribution!</h6>
             </div>`;
   }
 
-  deriveColourAndText(score): [string, string] {
-    let colour: string;
-    let text: string;
-    switch (score) {
-      case 0:
-        colour = 'custom-green';
-        text = 'Almost all spaces available';
+  getClass = index => ScoreUpdate.deriveClassNameAndText(index).className;
+
+  getText = index => ScoreUpdate.deriveClassNameAndText(index).text;
+
+  getIcon(facility: string) {
+    let iconText: string;
+    switch (facility) {
+      case 'COMPUTERS':
+        iconText = 'fa-desktop';
         break;
-      case 1:
-        colour = 'custom-yellow';
-        text = 'Fewer than half spaces available';
+      case 'OUTDOOR_SEATS':
+        iconText = 'fa-sun-o';
         break;
-      case 2:
-        colour = 'custom-orange';
-        text = 'Half or more spaces available';
+      case 'PRINTING':
+        iconText = 'fa-print';
         break;
-      case 3:
-        colour = 'custom-red';
-        text = 'No spaces left at all :\'(';
+      case 'REFRESHMENTS':
+        iconText = 'fa-coffee';
+        break;
+      case 'SOCKETS':
+        iconText = 'fa-plug';
+        break;
+      case 'TOILETS':
+        iconText = 'fa-male';
         break;
       default:
-        throw new Error('Error deriving colour from score');
+        throw Error('Icon not found for the facility!');
     }
-    return [colour, text];
-  }
-}
-
-export class ScoreUpdate {
-  constructor(
-    public student: string,
-    // tslint:disable-next-line:variable-name
-    public study_area: number,
-    public score: number
-  ) {
+    return iconText;
   }
 }

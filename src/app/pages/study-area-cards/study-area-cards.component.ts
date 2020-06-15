@@ -1,6 +1,8 @@
 import {AfterContentInit, Component, ComponentFactoryResolver, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {EventBusService} from '../services/eventbus.service';
+import {EventBusService} from '../../services/eventbus.service';
 import {Subscription} from 'rxjs';
+import {StudyArea} from '../../models/study-area.model';
+import {ScoreUpdate} from '../../models/score-update.model';
 
 @Component({
   selector: 'app-study-area-cards',
@@ -35,17 +37,23 @@ export class StudyAreaCardsComponent implements OnInit, AfterContentInit,  OnDes
   }
 
   filterSelectedAreas = (event: BlockLevelChangeEvent) => {
-    this.filteredAreas = event.studyAreas.filter(sa => sa.level === event.selectedLevel);
+    const filteredAreas = event.studyAreas.filter(sa => sa.level === event.selectedLevel);
+    this.filteredAreas = filteredAreas.sort((a, b) => a.id - b.id);
     this.studyAreaSelected.emit(this.filteredAreas[0]);
   }
 
   onCardClick = selectedStudyArea => this.studyAreaSelected.emit(selectedStudyArea);
 
-  calculateOccupancyBar = scores => Math.max(...scores) + 1;
+  calculateOccupancyBar = (scores: any[]) => {
+    const maxScore = Math.max(...scores);
+    return maxScore === 0 ? 0 : scores.lastIndexOf(Math.max(...scores)) + 1;
+  }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+
+  getClass = score => ScoreUpdate.deriveClassNameAndText(score === 0 ? score : score - 1).className;
 }
 
 export class BlockLevelChangeEvent {
@@ -56,27 +64,5 @@ export class BlockLevelChangeEvent {
 
   public toString() {
     return `BlockLevelChangeEvent - level: ${this.selectedLevel}`;
-  }
-}
-
-export class StudyArea {
-  constructor(
-     public id: number,
-     public areaName: string,
-     public block: string,
-     public level: number,
-     public scores: number[],
-     public tableCount: number,
-     public capacity: number,
-     public facilities: string[],
-     public description: string,
-     public lastUpdated: Date
-  ) { }
-
-  static convertDTO(input: any): StudyArea {
-    return new StudyArea(
-      input.id, input.area_name, input.block, input.level, input.scores, input.table_count,
-      input.capacity, input.facilities, input.description, input.last_updated
-    );
   }
 }

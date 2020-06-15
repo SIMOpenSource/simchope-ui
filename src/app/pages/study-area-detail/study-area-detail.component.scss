@@ -1,3 +1,5 @@
+@import "src/app/pages/block-view/block-view.component";
+
 ::ng-deep .vertical-center-modal {
   display: flex;
   align-items: center;
@@ -8,18 +10,27 @@
   top: 0;
   .ant-modal-content .ant-modal-body {
     .custom-green {
-      background-color: #2df687;
+      background-color: #38a869;
     }
     .custom-yellow {
-      background-color: #fade33;
+      background-color: #ffcc33;
     }
     .custom-orange {
-      background-color: #ff9d40;
+      background-color: #ff8133;
     }
     .custom-red {
-      background-color: #ff6464;
+      background-color: #d40c45;
+    }
+    .popup-modal {
+      padding-left: 10px;
+      color: white;
+      margin: 10px 0;
     }
   }
+}
+
+.btn {
+  border: hidden;
 }
 
 

@@ -1,11 +1,12 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {BlockLevelsService} from './services/block-levels.service';
-import {StudyAreasService} from './services/study-areas.service';
-import {EventBusService} from './services/eventbus.service';
-import {BlockLevelChangeEvent, StudyArea} from './study-area-cards/study-area-cards.component';
+import {BlockLevelsService} from '../../services/block-levels.service';
+import {StudyAreasService} from '../../services/study-areas.service';
+import {EventBusService} from '../../services/eventbus.service';
+import {BlockLevelChangeEvent} from '../study-area-cards/study-area-cards.component';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NzNotificationService} from 'ng-zorro-antd';
+import {StudyArea} from '../../models/study-area.model';
 
 @Component({
   selector: 'app-block-view',
@@ -41,6 +42,7 @@ export class BlockViewComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.routeSubscription = this.route.params.subscribe(params => {
+      // Validation to check if the block from route params is supported i.e - one of A, B, C
       if (!this.BLOCKS.includes(params.block)) {
         this.router.navigate(['/welcome/404']).then(
           res => console.log(res)
@@ -57,7 +59,7 @@ export class BlockViewComponent implements OnInit, OnDestroy {
     this.noOfLevels = this.blockLevelsService.getLevelsByBlock(this.block);
     this.numbers = new Array(this.noOfLevels);
     this.numbers.fill().map((x, i) => i);
-  }
+  };
 
   loadStudyAreas = () => {
     this.studyAreasService.getStudyAreasByBlock(this.block).subscribe(
@@ -69,15 +71,13 @@ export class BlockViewComponent implements OnInit, OnDestroy {
         console.error(error.message);
         this.notificationService.error('Error', 'Error while loading the study areas.');
         this.showError = true;
-      }, () => {
-      }
-    );
-  }
+      });
+  };
 
   changeLevels = (level: number) => {
     this.selectedLevel = level;
     this.eventBusService.publish(new BlockLevelChangeEvent(level, this.studyAreas));
-  }
+  };
 
   onStudyAreaSelected = (studyArea: StudyArea) => this.selectedStudyArea = studyArea;
 

@@ -1,0 +1,8 @@
+@import "src/app/pages/block-view/block-view.component";
+
+.truncated-text {
+  max-height: 75px;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
