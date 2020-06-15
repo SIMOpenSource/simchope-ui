@@ -51,6 +51,7 @@ export class StudyAreaDetailComponent implements OnInit {
               <h6>Right now, there are</h6>
               <div class="${scoreData.className} popup-modal">${scoreData.text}</div>
               <h6>Thank you for your contribution!</h6>
+              <h6>(Your contribution will be updated once you refresh the page.)</h6>
             </div>`;
   }
 
